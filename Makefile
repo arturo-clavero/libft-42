@@ -3,45 +3,53 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: artclave <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: arturo <arturo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 04:46:51 by artclave          #+#    #+#              #
-#    Updated: 2023/10/04 23:12:00 by artclave         ###   ########.fr        #
+#    Updated: 2024/06/19 18:24:25 by arturo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -rf
 NAME = libft.a
-SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_memmove.c ft_strmapi.c ft_split.c
-BONUS_SRC= ft_lstiter.c ft_lstclear.c ft_lstdelone.c ft_lstadd_back.c ft_lstlast.c ft_lstsize.c ft_lstadd_front.c ft_lstnew.c ft_lstmap.c
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 
-OBJS = $(SRC:.c=.o)
-BONUS_OBJS = $(BONUS_SRC:.c=.o)
+SRC = srcs/char_check/ft_isalnum.c srcs/char_check/ft_isalpha.c srcs/char_check/ft_isascii.c \
+      srcs/char_check/ft_isdigit.c srcs/char_check/ft_isprint.c \
+      srcs/conversion/ft_atoi.c srcs/conversion/ft_itoa.c srcs/conversion/ft_tolower.c \
+      srcs/conversion/ft_toupper.c \
+      srcs/linked_list/ft_lstadd_back.c srcs/linked_list/ft_lstadd_front.c \
+      srcs/linked_list/ft_lstclear.c srcs/linked_list/ft_lstdelone.c \
+      srcs/linked_list/ft_lstiter.c srcs/linked_list/ft_lstlast.c \
+      srcs/linked_list/ft_lstmap.c srcs/linked_list/ft_lstnew.c \
+      srcs/linked_list/ft_lstsize.c \
+      srcs/memory/ft_bzero.c srcs/memory/ft_calloc.c srcs/memory/ft_memchr.c \
+      srcs/memory/ft_memcmp.c srcs/memory/ft_memcpy.c srcs/memory/ft_memmove.c \
+      srcs/memory/ft_memset.c \
+      srcs/string/ft_split.c srcs/string/ft_strchr.c srcs/string/ft_strdup.c \
+      srcs/string/ft_striteri.c srcs/string/ft_strjoin.c srcs/string/ft_strlcat.c \
+      srcs/string/ft_strlcpy.c srcs/string/ft_strlen.c srcs/string/ft_strmapi.c \
+      srcs/string/ft_strncmp.c srcs/string/ft_strnstr.c srcs/string/ft_strrchr.c \
+      srcs/string/ft_strtrim.c srcs/string/ft_substr.c \
+      srcs/write/ft_putchar_fd.c srcs/write/ft_putendl_fd.c srcs/write/ft_putnbr_fd.c \
+      srcs/write/ft_putstr_fd.c
+
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(OBJS): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC)
+$(NAME): $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 
-$(NAME) : $(OBJS)
-	ar rcs $@ $^
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(BONUS_OBJS)
-	ar -rcs $(NAME) $(BONUS_OBJS)
-
-$(BONUS_OBJS): $(BONUS_SRC)
-	$(CC) $(CFLAGS) -c $(BONUS_SRC)
-
-cleantxt:
-	$(RM) *.txt
-clean: 
-	$(RM) $(OBJS) $(BONUS_OBJS) *.txt a.out
+clean:
+	rm -f $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
