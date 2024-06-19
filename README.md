@@ -14,7 +14,6 @@ The purpose of this project is to recreate many of the standard C library functi
 - [Functions](#functions)
 - [Compilation](#compilation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 
 ## Getting Started
 
